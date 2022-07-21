@@ -27,42 +27,76 @@ import numpy as np
 
 class easyX:
     def _obj_to_binary(self, objdat):
+        """
+        This function dumps a data object to a string of Base64 string.
+        :param object objdat: a binary data object
+
+        :return: a string of Base64 encoded
+        """
         return codecs.encode(pickle.dumps(objdat), "base64").decode()
 
     def _binary_to_obj(self, bdata):
+        """
+        This function decode a string of Base64 to a binary data object
+        :param string bdata: A string of Base64
+
+        :return: A binary data object
+        """
         return pickle.loads(codecs.decode(str(np.array(bdata, dtype=str)).encode(), "base64"))
 
     def save(self, data, fname, verbose=True):
-        binaryKeys = list()
-        hf = h5py.File(fname, "w")
-        hf.create_dataset("__easyfMRI__", data="easyX")
-        # Save RAW data
-        rawGroup = hf.create_group("raw")
-        for k in data.keys():
-            try:
-                if verbose:
-                    print('\x1b[0m' + f"SAVE::RAW::{k}", end='')
-                rawGroup.create_dataset(k, data=data[k])
-                if verbose:
-                    print('\x1b[32m' + " ✓" + '\x1b[0m')
-            except:
-                binaryKeys.append(k)
-                print('\x1b[0m' + " [" + '\x1b[94m' + "R2B" + '\x1b[0m' + "]" + '\x1b[0m')
-        # Save Binary data
-        binaryGroup = hf.create_group("binary")
-        for bk in binaryKeys:
-            try:
-                if verbose:
-                    print('\x1b[0m' + f"SAVE::BINARY::{bk}", end='')
-                binaryGroup.create_dataset(bk, data=self._obj_to_binary(data[bk]))
-                if verbose:
-                    print('\x1b[32m' + " ✓" + '\x1b[0m')
-            except Exception as e:
-                raise Exception(f"Cannot save data: \"{bk}\"\n" + str(e))
-        hf.close()
+        """
+        This function save a structured data (dictionary) to a single file
+
+        :param dict data: A python dictionary includes all of our data
+        :param string fname: A string includes output file address
+        :param bool verbose: A binary variable to enable showing log of saving process; It is enabled by default.
+
+        :return: A binary that is true if everything is fine.
+        """
+        try:
+            binaryKeys = list()
+            hf = h5py.File(fname, "w")
+            hf.create_dataset("__easyfMRI__", data="easyX")
+            # Save RAW data
+            rawGroup = hf.create_group("raw")
+            for k in data.keys():
+                try:
+                    if verbose:
+                        print('\x1b[0m' + f"SAVE::RAW::{k}", end='')
+                    rawGroup.create_dataset(k, data=data[k])
+                    if verbose:
+                        print('\x1b[32m' + " ✓" + '\x1b[0m')
+                except:
+                    binaryKeys.append(k)
+                    print('\x1b[0m' + " [" + '\x1b[94m' + "R2B" + '\x1b[0m' + "]" + '\x1b[0m')
+            # Save Binary data
+            binaryGroup = hf.create_group("binary")
+            for bk in binaryKeys:
+                try:
+                    if verbose:
+                        print('\x1b[0m' + f"SAVE::BINARY::{bk}", end='')
+                    binaryGroup.create_dataset(bk, data=self._obj_to_binary(data[bk]))
+                    if verbose:
+                        print('\x1b[32m' + " ✓" + '\x1b[0m')
+                except Exception as e:
+                    raise Exception(f"Cannot save data: \"{bk}\"\n" + str(e))
+            hf.close()
+        except:
+            return False
+        return True
 
 
     def load(self, fname, partial=None, verbose=True):
+        """
+        This function load an easyX file to a python dictionary
+
+        :param string fname: The address of a file
+        :param list partial: A list of strings, including variables that should be load from saved dictionary; It is None by default that causes loading all saved keys.
+        :param bool verbose: A binary variable to enable showing log of loading process; It is enabled by default.
+
+        :return: A python dictionary including saved data
+        """
         out = dict()
         hf = h5py.File(fname, "r")
         try:
@@ -117,6 +151,14 @@ class easyX:
         return out
 
     def load_keys(self, fname):
+        """
+        This function only loads variable names from a saved easyX file.
+        It is suitable for checking whether a variable name exists in a big data or not.
+
+        :param string fname: The address of a file
+
+        :return: A python dictionary including all saved keys; the value is None for all variables.
+        """
         out = dict()
         hf = h5py.File(fname, "r")
         rawData = hf['raw']
