@@ -1,15 +1,17 @@
-# Copyright (c) 2020 Tony Muhammad Yousefnezhad
-#
+# MIT License
+
+# Copyright (c) 2022 Tony (Muhammad) Yousefnezhad
+
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
 # to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 # copies of the Software, and to permit persons to whom the Software is
 # furnished to do so, subject to the following conditions:
-#
+
 # The above copyright notice and this permission notice shall be included in all
 # copies or substantial portions of the Software.
-#
+
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 # FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -29,10 +31,6 @@ class easyX:
 
     def _binary_to_obj(self, bdata):
         return pickle.loads(codecs.decode(str(np.array(bdata, dtype=str)).encode(), "base64"))
-        # Althernatively:
-        #return pickle.loads(codecs.decode(str(np.array2string(bdata)[2:-1]).replace("\\n", "").encode(), "base64"))
-        # Failed
-        #return pickle.loads(codecs.decode(str(bdata).encode(), "base64"))
 
     def save(self, data, fname, verbose=True):
         binaryKeys = list()
@@ -129,29 +127,3 @@ class easyX:
         for bk in binaryData.keys():
             out[bk] = None
         return out
-
-if __name__=="__main__":
-    # Create a complex data structre
-    d = {"a": np.array([[1, 2, 5, 8], [2., 4, 1, 6]]),
-         "b": [[1], [2, 4]],
-         "c": [[1, 20], [7, 4]],
-         "d": "Hi There",
-         "e": ["A", "B"],
-         "f": [["a", "b"], ["c", "d"]],
-         "data": np.random.rand(100, 1000)
-        }
-    print("Original data:\n", d)
-    # Example 1: Save dict to a file
-    ezx = easyX()
-    fname = "/tmp/a.ezx"
-    ezx.save(d, fname=fname)
-    # Example 2: Load a file to dict
-    ezx = easyX()
-    fname = "/tmp/a.ezx"
-    data = ezx.load(fname=fname)
-    print("Loaded data:\n", data)
-    # Example 3: Load only the keys in a file to a dict
-    ezx = easyX()
-    fname = "/tmp/a.ezx"
-    keys = ezx.load_keys(fname=fname)
-    print("Keys:\n", kout)
