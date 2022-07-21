@@ -1,4 +1,2 @@
 numpy
-pickle
-codecs
 h5py

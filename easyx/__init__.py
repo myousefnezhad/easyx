@@ -1,1 +1,1 @@
-from easyX import easyX
+from easyx.easyX import easyX
