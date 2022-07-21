@@ -24,7 +24,7 @@ You need to install the related libraries from the `requirements.txt` file:
 ```bash
 pip install -r requirements.txt
 ```
-This file includes `numpy`, `pickle`, `codecs`, `h5py`.
+This file includes `numpy`, `h5py`.
 
 
 ## How to use it?
@@ -49,7 +49,7 @@ Here, we have the dictionary `data` that includes different shapes of variables.
 You can use following commands for saving a dictionary in a file:
 ```python
 # Import easyX Library
-from easyX import easyX
+from easyx import easyX
 # Create an object from easyX class
 ezx = easyX()
 # Change this one with the PATH you need to save your data
@@ -62,7 +62,7 @@ ezx.save(data, fname=fname)
 You can use following commands for loading a data file into a dictionary:
 ```python
 # Import easyX Library
-from easyX import easyX
+from easyx import easyX
 # Create an object from easyX class
 ezx = easyX()
 # Change this one with the PATH you need to save your data
@@ -75,7 +75,7 @@ data = ezx.load(fname=fname)
 You can use following commands for loading the data structures (keys) from a data file into a dictionary:
 ```python
 # Import easyX Library
-from easyX import easyX
+from easyx import easyX
 # Create an object from easyX class
 ezx = easyX()
 # Change this one with the PATH you need to save your data
