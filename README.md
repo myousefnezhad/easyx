@@ -1,4 +1,4 @@
-# easyX: a simple Python library for saving complex data structure
+# easyX: a simple Python library for saving complex data structure based on HDF5
 
 This library enables you to save a Python dictionary with a complex structure to a single file. We have tested this library to save files in size 150 GB — i.e., you need a computer with 155 GB memory. 
 
