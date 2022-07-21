@@ -4,14 +4,23 @@ This library enables you to save a Python dictionary with a complex structure to
 
 The procedure is simple. The library tries to save homogeneous tensors by using the regular algorithm that is used for [Hierarchical Data Format 5 (HDF5)](https://en.wikipedia.org/wiki/Hierarchical_Data_Format). We will store them in a group called "raw." If the dictionary has other complex structures — such as another dictionary or nonhomogeneous tensors — the library will first dump the bytes of data from memory and encode it in a [base64](https://en.wikipedia.org/wiki/Base64) format. The encoded data will be stored as a vector in a group called "binary." This library is originally developed for the [easy fMRI project](https://easyfmri.learningbymachine.com/) — a toolbox for analyzing [task-based fMRI](https://en.wikipedia.org/wiki/Functional_magnetic_resonance_imaging) datasets.
 
+We have tested this library on Python 3.7 and above.
+
 ## How to install?
-You only need to copy the `easyX.py` to your project. You can use `git` for downloading this library, as well:
+
+### Using pip
+You simply install it using our `pip` package.
+```bash
+pip install easyx
+```
+
+### Using source file
+You only need to copy the `easyx/easyX.py` to your project. You can use `git` for downloading this library, as well:
 ```bash
 git clone https://gitlab.com/myousefnezhad/easyx.git
 ```
 
-## Requirements
-We have tested this library on Python 3.7 and Python 3.8. You need to install the libraries from the `requirements.txt` file:
+You need to install the related libraries from the `requirements.txt` file:
 ```bash
 pip install -r requirements.txt
 ```
@@ -19,7 +28,10 @@ This file includes `numpy`, `pickle`, `codecs`, `h5py`.
 
 
 ## How to use it?
-You first copy `easyX.py` to your main project folder. Then, you will save all variables in the form of a dictionary in Python. As an example, we have created a sample data:
+You will keep all variables in the form of a dictionary in Python. 
+
+As an example, we have created a sample data:
+
 ```python
 data = {"a": np.array([[1, 2, 5, 8], [2., 4, 1, 6]]),
 		 "b": [[1], [2, 4]],
@@ -30,6 +42,7 @@ data = {"a": np.array([[1, 2, 5, 8], [2., 4, 1, 6]]),
 		 "h": np.random.rand(100, 1000)
 		}
 ```
+
 Here, we have the dictionary `data` that includes different shapes of variables.
 
 ### Saving a dictionary into a file
@@ -71,6 +84,6 @@ fname = "/tmp/a.ezx"
 keys = ezx.load_keys(fname=fname) 
 ```
 
-For support and feedback, please contact us: [info@learningbymachine.com](mailto:info@learningbymachine.com).
+For support and feedback, please contact us: [info@yousefnezhad.com](mailto:info@yousefnezhad.com).
 
 
