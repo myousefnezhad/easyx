@@ -7,7 +7,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as fh:
     long_description = "\n" + fh.read()
 
-VERSION = '1.0.0'
+VERSION = '1.1.0'
 DESCRIPTION = 'A library for storing big data'
 LONG_DESCRIPTION = 'easyX: a simple Python library for storing complex, big data structure based on HDF5'
 
